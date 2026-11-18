@@ -22,8 +22,13 @@ context ("a day after the first Quad summit in two years").
 All art is drawn with PIL (flat editorial illustration, no photos),
 so the file is fully reproducible from this script alone.
 
-Usage: python3 build_image_v3.py [out.png]   (default: entry-v3.png)
+Usage: python3 build_image.py [out.png]   (default: entry-v3.png)
 Output: 1024x1024 JPEG bytes in a file named entry.png, under 1 MiB.
+
+v3.1 (legibility): mid/bottom-row headlines render at 20pt with a
+shrink-to-fit floor of 18pt so every headline still fits its two
+lines, headline leading tightened to size+2 and deck leading to
+size+3, keeping the page inside 1024px. No story, date or fact changed.
 """
 import math
 import os
@@ -594,7 +599,7 @@ BRIEFS = [
 
 
 def feature_card(img, d, x, y, w, num, tag, headline, deck, art_fn, art_h,
-                 head_size, deck_size, tag_size=13):
+                 head_size, deck_size, tag_size=13, head_min=0):
     d.rectangle([x, y, x + w, y + art_h], fill=PAPER2,
                 outline=(190, 180, 160), width=1)
     # draw art on a temp image so nothing spills outside the box
@@ -611,13 +616,20 @@ def feature_card(img, d, x, y, w, num, tag, headline, deck, art_fn, art_h,
     tf = font(SANS_BOLD, tag_size)
     d.text((x, ty), tag, font=tf, fill=RED)
     ty += tag_size + 5
-    hf = font(SERIF_BOLD, head_size)
+    # headline: shrink-to-fit (down to head_min) so it still fits 2 lines,
+    # with tighter leading (size+2) for legibility at small sizes
+    hs = head_size
+    while hs > head_min:
+        if len(wrap(d, headline, font(SERIF_BOLD, hs), w)) <= 2:
+            break
+        hs -= 1
+    hf = font(SERIF_BOLD, hs)
     lines = wrap(d, headline, hf, w)
-    ty = text_lines(d, x, ty, lines[:2], hf, INK, lh=head_size + 3)
+    ty = text_lines(d, x, ty, lines[:2], hf, INK, lh=hs + 2)
     ty += 3
     df = font(SANS, deck_size)
     dlines = wrap(d, deck, df, w)
-    ty = text_lines(d, x, ty, dlines[:2], df, GREY, lh=deck_size + 4)
+    ty = text_lines(d, x, ty, dlines[:2], df, GREY, lh=deck_size + 3)
     return ty
 
 
@@ -667,7 +679,8 @@ def build(out_path):
         y_end = y
         for num, tag, head, deck, art_fn in row:
             e = feature_card(img, d, x, y, mid_w, num, tag, head, deck, art_fn,
-                             mid_art, head_size=18, deck_size=12, tag_size=11)
+                             mid_art, head_size=20, deck_size=12, tag_size=11,
+                             head_min=18)
             y_end = max(y_end, e)
             x += mid_w + 10
         y = y_end + 5
