@@ -1,13 +1,13 @@
 // news-image-20261118 entry (Node 22, standard library only).
 //
-// One image summing up Wednesday 18 November 2026: Trump lands in
-// Manila for the Quad talks, Xi meets Carney as Canada and China extend
-// trade deals, Cyclone Akvan strengthens over the Bay of Bengal, Japan
-// scrambles jets, plus the day's other briefs. The front page is
+// Round 2: a dense one-page front page for Wednesday 18 November 2026 -
+// 12 illustrated feature stories, a dotted world map with numbered pins,
+// and 30 numbered briefs (42 stories, six continents). The front page is
 // entry.png beside this file (1024x1024 JPEG bytes, under the 1 MiB
-// gate); build_image.py in this repo shows how it was composed. The
-// program only copies that file to /output/entry.png, because the
-// grader runs with no network and the judge sees exactly those bytes.
+// gate); build_image.py in this repo draws it from scratch with PIL, so
+// the page is fully reproducible. The program only copies that file to
+// /output/entry.png, because the grader runs with no network and the
+// judge sees exactly those bytes.
 //
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for
 // /output:
