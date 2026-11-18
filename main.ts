@@ -1,13 +1,14 @@
 // news-image-20261118 entry (Node 22, standard library only).
 //
-// Round 2: a dense one-page front page for Wednesday 18 November 2026 -
-// 12 illustrated feature stories, a dotted world map with numbered pins,
-// and 30 numbered briefs (42 stories, six continents). The front page is
+// One image summing up Wednesday 18 November 2026: 45 stories on one
+// front page — Iran fires drones at a US base in Kuwait, Xi greets Trump
+// at APEC in Shenzhen, Cyclone Akvan bears down on Andhra Pradesh, COP31
+// splits over fossil fuels, UK inflation hits 3.6%, GTA VI launches,
+// plus 32 numbered briefs and a dotted world map. The front page is
 // entry.png beside this file (1024x1024 JPEG bytes, under the 1 MiB
-// gate); build_image.py in this repo draws it from scratch with PIL, so
-// the page is fully reproducible. The program only copies that file to
-// /output/entry.png, because the grader runs with no network and the
-// judge sees exactly those bytes.
+// gate); build_image.py in this repo shows how it was composed. The
+// program only copies that file to /output/entry.png, because the
+// grader runs with no network and the judge sees exactly those bytes.
 //
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for
 // /output:
